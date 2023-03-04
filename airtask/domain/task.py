@@ -26,12 +26,17 @@ class TaskFlow(Protocol):
 
 
 @dataclass
-class TaskFlowConfigItem:
+class TaskImplConfig:
     impl_name: ProtocolImplName
     params: dict[ParamKey, ParamValue]
-    requirement_params: dict[ProtocolName, "TaskFlowConfigItem"]
+    requirement_params: dict[ProtocolName, "TaskImplConfig"]
+
+
+class TaskCollection(Protocol):
+    def get_task(self, flow_config: TaskImplConfig) -> Task:
+        raise NotImplementedError
 
 
 class TaskFlowManager(Protocol):
-    def generate_flow(self, root_config: TaskFlowConfigItem):
+    def generate_flow(self, root_config: TaskImplConfig):
         raise NotImplementedError
