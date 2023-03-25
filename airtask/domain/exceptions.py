@@ -1,8 +1,8 @@
-class ProtocolNotFound(Exception):
+class UnknownProtocolName(Exception):
     pass
 
 
-class ProtocolImplNotFound(Exception):
+class UnknownTaskName(Exception):
     pass
 
 

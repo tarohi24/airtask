@@ -1,15 +1,31 @@
-from airtask.domain.models import GraphConfig, GraphHydrator, GraphRunner
+from typing import Optional
+
+from airtask.domain.exceptions import UnknownTaskName, UnknownProtocolName
+from airtask.domain.models import TaskGraph, TaskCollection, TaskConfig, Task
+from airtask.domain.types import ProtocolName
 
 
-def run_task(
-    config: GraphConfig,
-    hydrator: GraphHydrator,
-    runner: GraphRunner,
-) -> None:
-    """
-    `run_task` is a function to run a task.
-    It takes a configuration of a task graph and a hydrator to generate a task graph.
-    Then it runs the task graph.
-    """
-    task_graph = hydrator.hydrate(config)
-    runner.run(graph=task_graph)
+def hydrate_graph(
+    root_config: TaskConfig,
+    collection: TaskCollection,
+    protocol_name: Optional[ProtocolName] = None,
+) -> TaskGraph:
+    if protocol_name is not None:
+        try:
+            root_task_class = collection.tasks[protocol_name]
+        except KeyError:
+            raise UnknownProtocolName(protocol_name)
+    else:
+        try:
+            root_task_class = collection.task_names_to_classes[root_config.task_name]
+        except KeyError:
+            raise UnknownTaskName(root_config.task_name)
+    # hydrate root task
+    root_task = root_task_class.from_params(root_config.params)
+    sub_graphs = [
+        hydrate_graph(
+            root_config=config, collection=collection, protocol_name=protocol_name
+        )
+        for protocol_name, config in root_config.requirement_params
+    ]
+    return TaskGraph(root_task=root_task, sub_graphs=sub_graphs)
