@@ -3,9 +3,9 @@ from typing import Protocol
 
 import pytest
 
-from airtask.domain.task import generate_task_graph
+from airtask.domain.logics import generate_task_graph
 from airtask.domain.types import ProtocolCollection
-from airtask.domain.entities import Task
+from airtask.domain.models import Task
 
 
 class LoadText(Protocol):

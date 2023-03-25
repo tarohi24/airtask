@@ -1,10 +1,10 @@
 from typing import TypeAlias, Protocol
 
-from airtask.domain.entities import Task
+from airtask.domain.models import Task
 
 ParamKey: TypeAlias = str
 ParamValue: TypeAlias = str | int | float | bool
 ProtocolName: TypeAlias = str
-ProtocolImplName: TypeAlias = str
+TaskName: TypeAlias = str
 DependentTaskName: TypeAlias = str
-ProtocolCollection = dict[type[Protocol], dict[ProtocolImplName, type[Task]]]
+ProtocolCollection = dict[type[Protocol], dict[TaskName, type[Task]]]

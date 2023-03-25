@@ -5,8 +5,8 @@ from airflow import DAG
 from airflow.utils.state import DagRunState
 from airflow.utils.types import DagRunType
 
-from airtask.domain.task import TaskFlowManager, TaskFlow
-from airtask.domain.entities import Task, TaskImplConfig
+from airtask.domain.logics import TaskFlowManager, TaskFlow
+from airtask.domain.models import TaskImplConfig, Task
 
 
 @dataclass

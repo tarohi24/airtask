@@ -1,4 +1,4 @@
-from airtask.domain.entities import TaskImplConfig, TaskGraph
+from airtask.domain.models import TaskImplConfig, TaskGraph
 from airtask.domain.exceptions import ProtocolNotFound, ProtocolImplNotFound
 from airtask.domain.types import ProtocolName, ProtocolCollection
 
