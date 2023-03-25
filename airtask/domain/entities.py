@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import TypeVar, Protocol, Optional
 
-from airtask.types import DependentTaskName, ProtocolImplName, ParamKey, ParamValue, ProtocolName
+from airtask.domain.types import DependentTaskName, ProtocolImplName, ParamKey, ParamValue, ProtocolName
 
 _T = TypeVar("_T", bound=dict[DependentTaskName, type[Protocol]])
 
