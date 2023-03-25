@@ -52,3 +52,8 @@ class TaskGraph:
 class GraphHydrator(Protocol):
     def hydrate(self, config: GraphConfig) -> TaskGraph:
         raise NotImplementedError
+
+
+class GraphRunner(Protocol):
+    def run(self, graph: TaskGraph) -> None:
+        raise NotImplementedError

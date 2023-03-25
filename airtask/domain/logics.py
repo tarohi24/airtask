@@ -1,20 +1,15 @@
-from airtask.domain.models import TaskImplConfig, TaskGraph
-from airtask.domain.exceptions import ProtocolNotFound, ProtocolImplNotFound
-from airtask.domain.types import ProtocolName, ProtocolCollection
+from airtask.domain.models import GraphConfig, GraphHydrator, GraphRunner
 
 
-def generate_task_graph(
-    root_protocol_name: ProtocolName,
-    root_config: TaskImplConfig,
-    task_collection: ProtocolCollection,
-) -> TaskGraph:
-    try:
-        root_task_protocol = task_collection[root_protocol_name]
-    except KeyError:
-        raise ProtocolNotFound(f"Protocol {root_protocol_name} is not found.")
-    try:
-        root_impl_class = root_task_protocol[root_config.impl_name]
-    except KeyError:
-        raise ProtocolImplNotFound(
-            f"Protocol {root_protocol_name} does not have implementation {root_config.impl_name}."
-        )
+def run_task(
+    config: GraphConfig,
+    hydrator: GraphHydrator,
+    runner: GraphRunner,
+) -> None:
+    """
+    `run_task` is a function to run a task.
+    It takes a configuration of a task graph and a hydrator to generate a task graph.
+    Then it runs the task graph.
+    """
+    task_graph = hydrator.hydrate(config)
+    runner.run(graph=task_graph)
