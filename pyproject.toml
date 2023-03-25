@@ -4,10 +4,14 @@ version = "0.1.0"
 description = ""
 authors = ["Wataru Hirota <wataru@whiro.me>"]
 readme = "README.md"
+packages = [
+    { include = "airtask" },
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.10"
-apache-airflow = "^2.5.1"
+prefect = "^2"
 
 
 [tool.poetry.group.dev.dependencies]
